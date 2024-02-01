@@ -1,19 +1,20 @@
 package com.example.kütüphane;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Book extends Category {
     private int id;
-    private String author;
+    private Author author;
     ;
     private Category category;
     private boolean borrowed;
     private int rating;
-    private ArrayList borrowedItems = new ArrayList();
 
-    public Book(int id, String name, int id1, String author, Category category, boolean borrowed, int rating, ArrayList borrowedItems) {
+
+    public Book(int id, String name, Author author, Category category, boolean borrowed, int rating) {
         super(id, name);
-        this.id = id1;
+        this.id = id;
         this.author = author;
         this.category = category;
         this.borrowed = borrowed;
@@ -21,31 +22,15 @@ public class Book extends Category {
     }
 
 
-
-
-    public Book(int id, String name, String author, Category category) {
-        super(id, name);
+    public void updateBookInfo(String title, Author author, Category category) {
         this.author = author;
         this.category = category;
     }
-
-    public Book(int id, String name, Author author, Category category, boolean borrowed, int rating) {
-        super(id ,name);
-    }
-
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-    public void updateBookInfo(String title, Author author, Category category) {
-        this.author = String.valueOf(author);
-        this.category = category;
-    }
-
     public int getId() {
         return id;
     }
-    public String getAuthor() {
+
+    public Author getAuthor() {
         return author;
     }
 
@@ -53,16 +38,15 @@ public class Book extends Category {
         return category;
     }
 
-    public boolean isBorrowed() {
-        return borrowed;
-    }
-
     public int getRating() {
         return rating;
     }
-    public ArrayList getBorrowedItems() {
-        return new ArrayList(borrowedItems);
+    private ArrayList borrowedItems = new ArrayList();
+    public List<Item> getBorrowedItems() {
+
+        return new ArrayList<>(borrowedItems);
     }
+
 
     @Override
     public String toString() {

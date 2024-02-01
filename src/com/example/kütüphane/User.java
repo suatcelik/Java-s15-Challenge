@@ -49,12 +49,6 @@ public class User {
             borrowedBooksCount--;
         }
     }
-    public void rateBook(Book book, int rating) {
-        if (rating >= 0 && rating <= 5) {
-            bookRatings.put(book, rating);
-        }
-    }
-
     public boolean bookHasBorrowed(Book book) {
         return borrowedItems.contains(book);
     }

@@ -83,9 +83,8 @@ public class Main {
             System.out.println("2. Kitap Al");
             System.out.println("3. Kitap İade Et");
             System.out.println("4. Kitap Bilgilerini Güncelle");
-            System.out.println("5. Yazarlara Göre Kitapları Listele");
-            System.out.println("6. Kategorilere Göre Kitapları Listele");
-            System.out.println("7. Çıkış");
+            System.out.println("5. Yeni Kullanıcı Kaydet");
+            System.out.println("6. Çıkış");
 
 
             int choice = scanner.nextInt();
@@ -105,12 +104,9 @@ public class Main {
                     updateBook(currentUser, library, scanner);
                     break;
                 case 5:
-                    listBooksByAuthor(library, scanner);
+                    addUserFromInput( library, scanner);
                     break;
                 case 6:
-                    listBooksByCategory(library, scanner);
-                    break;
-                case 7:
                     System.out.println("Çıkış yapılıyor.");
                     return;
                 default:
@@ -158,29 +154,7 @@ public class Main {
 
         if (bookNumber >= 1 && bookNumber <= borrowedItems.size()) {
             Book book = (Book) borrowedItems.get(bookNumber - 1);
-            if (book instanceof Book && user.bookHasBorrowed((Book) book)) {
-                System.out.print("Kitaba puan vermek istiyor musunuz ? (Evet/Hayır) : ");
-                String ratingChoice = scanner.nextLine();
 
-                if (ratingChoice.equalsIgnoreCase("Evet")) {
-                    System.out.print("1 ile 5 arasında puan giriniz): ");
-                    int rating = scanner.nextInt();
-                    scanner.nextLine();
-
-                    if (rating >= 1 && rating <= 5) {
-                        book.setRating(rating);
-                        System.out.println("Puanınız kaydedildi.");
-                    } else {
-                        System.out.println("Geçersiz puan değeri.");
-                    }
-                }
-
-                user.returnItem((Book) book);
-                library.addBook((Book) book);
-                System.out.println(((Book) book).getName() + " kitabı iade edildi.");
-            } else {
-                System.out.println("Geçersiz seçenek veya kitap kullanıcıya ait değil.");
-            }
         } else {
             System.out.println("Geçersiz kitap ID.");
         }
@@ -197,7 +171,7 @@ public class Main {
             if (user.bookHasBorrowed(book)) {
                 System.out.println("Bu kitabı güncelleyemezsiniz. Kitap ödünç alınmış durumda.");
             } else {
-                System.out.print("Yeni başlık: ");
+                System.out.print("Kitap ismi: ");
                 String newTitle = scanner.nextLine();
 
                 System.out.print("Yeni yazar adı: ");
@@ -206,7 +180,7 @@ public class Main {
                 Author newAuthor = library.getAuthorByAuthorName(authorName);
 
                 Random random = new Random();
-                int randomNumber = random.nextInt(101000);
+                int randomNumber = random.nextInt(100);
 
                 System.out.print("Yeni kategori adı: ");
                 String newCategoryName = scanner.nextLine();
@@ -220,6 +194,8 @@ public class Main {
         }
     }
 
+
+
     private static void listBooks(Library library) {
         System.out.println("Kütüphanedeki kitaplar:");
         for (Book book : library.getBooks()) {
@@ -227,48 +203,18 @@ public class Main {
         }
     }
 
-
-    private static void listBooksByCategory(Library library, Scanner scanner) {
-        System.out.print("Kategori adını giriniz: ");
-        String categoryName = scanner.nextLine();
-        List<Book> booksInCategory = library.getBooksByCategory(categoryName);
-
-
-        System.out.println("Kategori '" + categoryName + "' için bulunan kitaplar:");
-        for (Book book : booksInCategory) {
-            System.out.println(book.getName());
-        }
-
-    }
-
-    public static List<Book> getBooksByAuthorId(int authorId, List<Book> bookList) {
-        List<Book> result = new ArrayList<>();
-        for (Book book : bookList) {
-            if (book.getAuthor().equals(authorId)) {
-                result.add(book);
-            }
-        }
-        return result;
-    }
-    private static void listBooksByAuthor(Library library, Scanner scanner) {
-        System.out.print("Yazar adını giriniz: ");
-        String authorName = scanner.nextLine();
-        List<Book> booksByAuthor = library.getBooksByAuthor(authorName);
-
-        System.out.println("Yazar '" + authorName + "' için bulunan kitaplar:");
-        for (Book book : booksByAuthor) {
-            System.out.println(book.getId() + ". " + book.getName() + " - " + book.getCategory().getName());
-            System.out.println();
-        }
-    }
-
-
     public static void addBook(Library library, Book book) {
         library.addBook(book);
         System.out.println(book.getName() + " kütüphaneye eklendi.");
     }
 
 
+    private static void addUserFromInput(Library library, Scanner scanner) {
+        System.out.print("Kullanıcı adı: ");
+        String userName = scanner.nextLine();
+        User newUser = new User(library.generateUserId(), userName);
+        addUser(library, newUser);
+    }
 
     public static void addUser(Library library, User user) {
         library.addUser(user);

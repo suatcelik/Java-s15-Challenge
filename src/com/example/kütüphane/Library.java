@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
+    private int lastUserId = 0;
     private ArrayList librarians;
     private List<User> users;
     private ArrayList books;
@@ -41,6 +42,10 @@ public class Library {
         return books;
     }
 
+    public int generateUserId() {
+        return ++lastUserId;
+    }
+
     public List<Book> getBooksByCategory(String categoryName) {
         List<Book> booksInCategory = new ArrayList<>();
         for(Object item : books) {
@@ -71,7 +76,7 @@ public class Library {
         for(Object item : books) {
             if (item instanceof Book) {
                 Book b = (Book) item;
-                String author = b.getAuthor();
+                String author = b.getAuthor().getTitle();
                 if ((author.equals(authorName))){
                     booksByAuthor.add(b);
                 }
