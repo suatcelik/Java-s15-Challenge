@@ -12,6 +12,8 @@ public class Main {
         Librarian librarian = new Librarian(1, "Emre");
         Library library = new Library(1);
         library.addLibrarian(librarian);
+
+        // Yazarlar
         Author author1 = new Author(1, "Peyami Safa");
         Author author2 = new Author(2, "Ömer Seyfettin");
         Author author3 = new Author(3, "Kemal Tahir");
@@ -19,7 +21,7 @@ public class Main {
         Author author5 = new Author(5, "Sabahattin Ali");
         Author author6 = new Author(6, "Ahmet Hamdi Tanpınar");
 
-
+        // Katagoriler
         Category category1 = new Category(1, "Hikaye");
         Category category2 = new Category(2, "Roman");
         Category category3 = new Category(3, "Deneme");
@@ -28,16 +30,16 @@ public class Main {
         Category category6 = new Category(6, "Öykü");
 
 
-
+        //Kullanıcılar
         User user1 = new User(1 ,"suat");
         User user2 = new User(2 , "fatih");
         User user3 = new User(3 , "mehmet");
-
 
         addUser(library, user1);
         addUser(library, user2);
         addUser(library, user3);
 
+        //Kitaplar
         Book book1 = new Book(1, "Bahar ve Kelebekler" ,author2 ,category1 , true , 3);
         Book book2 = new Book(2, "Cingöz Recai" ,author1 , category2 , false , 5);
         Book book3 = new Book(3, "Müfettişler Müfettişi" , author6 , category3 , false ,4);
@@ -53,10 +55,11 @@ public class Main {
         addBook(library, book6);
 
 
+        //Arayüz
 
         Scanner scanner = new Scanner(System.in);;
 
-        System.out.print("Kullanıcı Adı: ");
+        System.out.print("Kullanıcı: ");
         String username = scanner.nextLine();
 
         User currentUser = null;
@@ -73,12 +76,12 @@ public class Main {
             return;
         }
 
-        System.out.println("Hoş geldiniz, " + currentUser.getName()+ "." +" Lütfen yapmak istediğiniz işlemi seçin.");
+        System.out.println("Hoş geldin, " + currentUser.getName()+ "." +" Lütfen yapmak istediğin işlemi seç.");
 
         while (true) {
             System.out.println("1. Kitapları Listele");
-            System.out.println("2. Kitap İade Et");
-            System.out.println("3. Kitap Al");
+            System.out.println("2. Kitap Al");
+            System.out.println("3. Kitap İade Et");
             System.out.println("4. Kitap Bilgilerini Güncelle");
             System.out.println("5. Yazarlara Göre Kitapları Listele");
             System.out.println("6. Kategorilere Göre Kitapları Listele");
@@ -93,10 +96,10 @@ public class Main {
                     listBooks(library);
                     break;
                 case 2:
-                    returnBook(currentUser, library, scanner);
+                    borrowBook(currentUser, library, scanner);
                     break;
                 case 3:
-                    borrowBook(currentUser, library, scanner);
+                    returnBook(currentUser, library, scanner);
                     break;
                 case 4:
                     updateBook(currentUser, library, scanner);

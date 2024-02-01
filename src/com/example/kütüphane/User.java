@@ -18,7 +18,7 @@ public class User {
     }
 
     public boolean canBorrow() {
-        return borrowedBooksCount < 5;
+        return borrowedBooksCount < 5;  // en fazla 5 kitap ödünç alınabilir
     }
 
     //@Override
